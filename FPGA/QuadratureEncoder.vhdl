@@ -4,30 +4,30 @@ USE IEEE.NUMERIC_STD.ALL;
 
 ENTITY QuadratureEncoder IS
 	GENERIC (
-		DATA_WIDTH : natural := 10
+		ENCODER_WIDTH : natural := 12
 	);
-    PORT ( clk 				: IN   STD_LOGIC;
-	         signalA1		: IN   STD_LOGIC;
-		  		 signalB1		: IN   STD_LOGIC;
-		  		 signalA2		: IN   STD_LOGIC;
-		  		 signalB2		: IN   STD_LOGIC;
-		  		 c_output1  : OUT  STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0);
-		  		 c_output2  : OUT  STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0)
+    PORT ( clk 				: IN   std_logic;
+	         signalA1		: IN   std_logic;
+		  		 signalB1		: IN   std_logic;
+		  		 signalA2		: IN   std_logic;
+		  		 signalB2		: IN   std_logic;
+		  		 c_mtrPan   : OUT  std_logic_vector(ENCODER_WIDTH-1 downto 0);
+		  		 c_mtrTilt  : OUT  std_logic_vector(ENCODER_WIDTH-1 downto 0)
 	);
 		   
 END QuadratureEncoder;
 
 ARCHITECTURE bhv OF QuadratureEncoder IS
-	SIGNAL   P0, P1, Q0, Q1, U1,D1,U2,D2    : STD_LOGIC;
-  SIGNAL   count1,count2				          : SIGNED (DATA_WIDTH-1 downto 0) := (others => '0');
+	SIGNAL   P0, P1, Q0, Q1, U1,D1,U2,D2    : std_logic;
+  SIGNAL   count1,count2				          : signed (ENCODER_WIDTH-1 downto 0) := (others => '0');
 
 BEGIN
 	p_encoder : PROCESS (clk)
 	BEGIN
 		IF (clk'EVENT and clk='1') THEN
 			-- Counter of Encoder Rotation
-			c_output1 <= std_logic_vector(count1);
-			c_output2 <= std_logic_vector(count2);
+			c_mtrPan <= std_logic_vector(count1);
+			c_mtrTilt <= std_logic_vector(count2);
 			
 			-- Determine the direction of the encoder
 			Q0 <= signalA1 xor signalB1;
