@@ -98,12 +98,12 @@ begin
           end if;
         end if;
       else
-        ram(12)   <= reg0_in;
-        ram(13)   <= reg1_in;
-        ram(14)   <= reg2_in;
-        ram(15)   <= reg3_in;
-        reg4_out <= ram(16);
-        reg5_out <= ram(17);
+        ram(12)   <= reg0_in; --lsb1 motor Pan enc counter
+        ram(13)   <= reg1_in; --msb1 sign extension
+        ram(14)   <= reg2_in; --lsb2 motor Tilt enc counter
+        ram(15)   <= reg3_in; --msb2 sign extension
+        reg4_out <= ram(16); --lsb out dir_Pan(2) & dir_Tilt(2)
+        reg5_out <= ram(17); --msb out duty_mtrPan(8) & duty_mtrTilt(8)
         reg6_out <= ram(18);
         reg7_out <= ram(19);
       end if;
