@@ -76,8 +76,7 @@ architecture structure of setup_control is
   component ramstix_gpmc_driver is
     generic(
       DATA_WIDTH           : integer := 16;
-			ENCODER_WIDTH        : integer := 12;
-      GPMC_ADDR_WIDTH_HIGH : integer := 10;
+		GPMC_ADDR_WIDTH_HIGH : integer := 10;
       GPMC_ADDR_WIDTH_LOW  : integer := 1;
       RAM_SIZE             : integer := 32
 		);
@@ -193,7 +192,7 @@ architecture structure of setup_control is
 	
   enc                      : component QuadratureEncoder 
   generic map(
-		ENCODER_WIDTH           => ENCODER_WIDTH;
+		ENCODER_WIDTH           => ENCODER_WIDTH
 	)
   port map (
 		clk   		              => CLOCK_50,
@@ -233,13 +232,13 @@ architecture structure of setup_control is
 	--msb_buffer_in                <= (others  => '1');
 	--lsb_buffer_in                <= (others  => '1');
 	msb_buffer_in                <= (others  => enc_cntPan(11));
-	lsb_buffer_in(15 downto 12)  <= enc_cntPan(11);
+	lsb_buffer_in(15 downto 12)  <= (others  => enc_cntPan(11));
 	lsb_buffer_in(11 downto  0)  <= enc_cntPan;
   -- Encoder Counter for Motor TILT
 	--msb_buffer_in2               <= (others => '0');
 	--msb_buffer_in2               <= (others => '1');
 	msb_buffer_in2               <= (others => enc_cntTilt(11));
-	lsb_buffer_in2(15 downto 12) <= enc_cntTilt(11);
+	lsb_buffer_in2(15 downto 12) <= (others => enc_cntTilt(11));
 	lsb_buffer_in2(11 downto  0) <= enc_cntTilt;
   
   -- Signal for Motor
